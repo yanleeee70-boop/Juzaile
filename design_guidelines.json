@@ -1,0 +1,105 @@
+{
+  "theme": "light",
+  "archetype": "Swiss & High-Contrast (Authority, Clarity, Truth) mixed with Industrial Professionalism",
+  "typography": {
+    "heading_font": "Chivo",
+    "body_font": "IBM Plex Sans",
+    "rules": [
+      "No Inter, Roboto, or Open Sans.",
+      "Headings must use tight letter spacing: tracking-tight or tracking-tighter.",
+      "Overlines/Labels must be Uppercase, tiny, and wide spacing: tracking-[0.2em].",
+      "Line height: leading-none for headers, leading-relaxed for body.",
+      "Heading jump gap rule: Avoid jumping more than 2 Tailwind steps between H1 and subtitles."
+    ],
+    "installation": "Add Google Fonts links for Chivo and IBM Plex Sans in index.html or import in CSS."
+  },
+  "colors": {
+    "background": {
+      "page": "#F8FAFC",
+      "surface": "#FFFFFF",
+      "surface_muted": "#F1F5F9"
+    },
+    "text": {
+      "primary": "#0F172A",
+      "secondary": "#64748B",
+      "inverse": "#FFFFFF"
+    },
+    "accents": {
+      "primary": "#046A38", 
+      "primary_hover": "#03522b",
+      "alert": "#FF3333",
+      "alert_hover": "#cc2929",
+      "warning": "#F59E0B",
+      "info": "#2563EB"
+    },
+    "rules": [
+      "Tinted Grey Rule: Neutral greys are tinted with slate (blueish-grey) to feel alive.",
+      "Contrast ratio must strictly be APCA/WCAG compliant.",
+      "Hover states must be a lighter/darker hue of the active state. ALWAYS explicitly set text color on hover.",
+      "DO NOT use teal green or teal blue (#1B93A4).",
+      "Alerts for low stock MUST use the high-contrast #FF3333."
+    ]
+  },
+  "grids_and_layouts": {
+    "philosophy": "High Density Grid for Dashboards. Every pixel utilized for 500+ items.",
+    "spacing_scale": "p-2, p-4, p-6, p-8, p-12",
+    "structure": {
+      "base_grid": "grid-cols-1 md:grid-cols-3 lg:grid-cols-4",
+      "gap": "gap-4 md:gap-6",
+      "widgets": {
+        "summary": "col-span-1",
+        "primary_data": "col-span-3 lg:col-span-4",
+        "sidebar_filters": "col-span-1 lg:col-span-3"
+      }
+    },
+    "surface_strategy": "The Technical Look. Expose the skeleton. Cardless, flat backgrounds with 1px border-slate-200. No heavy shadows by default. Use border-collapse style layouts for dense data."
+  },
+  "components": {
+    "tables": "Core inventory table must be dense, utilizing full width, clear row-level actions, and sticky headers. Implement Shadcn Table.",
+    "buttons": "Sharp edges (rounded-none or max rounded-sm), high contrast. Primary actions in Deep Emerald.",
+    "inputs": "Shadcn Form/Input/Select components heavily customized. Flat, 1px border, focus-visible:ring-1 focus-visible:ring-emerald-500. NO transparency on dropdowns.",
+    "badges": "For stock status. High contrast solid backgrounds (e.g., Red for low stock, Emerald for in-stock) with white text. No soft pastel badges.",
+    "dialogs": "Shadcn Dialog for Add/Edit item and supplier info. Must have solid background and subtle 1px border.",
+    "toasts": "Use 'sonner' for success/error alerts (e.g., Item added, Low stock warning)."
+  },
+  "visual_enhancers": {
+    "surface_details": "Flat Solid surfaces for data to prevent visual refraction. No Glassmorphism for the main dashboard to ensure maximum readability.",
+    "borders": "1px crisp borders (border-slate-200).",
+    "motion": "Micro-interactions on rows: hover:bg-slate-50. Buttons: hover:-translate-y-[1px] hover:shadow-sm transition-all duration-200."
+  },
+  "accessibility": {
+    "contrast": "Ensure text meets APCA standards. Use text shadow over images if necessary.",
+    "focus": "focus:ring-2 focus:ring-emerald-500 focus:outline-none.",
+    "motion": "Respect prefers-reduced-motion.",
+    "testing": "All interactive elements MUST include data-testid attribute (e.g., data-testid='add-item-button', data-testid='inventory-table-row')."
+  },
+  "icons_and_assets": {
+    "library": "phosphor-icons/react (Duotone or regular weight for dense dashboards)",
+    "installation_command": "yarn add @phosphor-icons/react",
+    "image_urls": {
+      "auth_background": {
+        "url": "https://images.unsplash.com/photo-1772300704502-410f0fbd43bb",
+        "description": "Spacious empty warehouse interior with polished concrete floor to be used as a split-screen login page background to reinforce the physical/inventory aspect of the app."
+      }
+    }
+  },
+  "instructions_to_main_agent": [
+    "Build a robust Dashboard layout with a fixed left sidebar (navigation) and top header (user profile/search).",
+    "For the inventory table, ensure advanced filtering (categories, stock level) and search are immediately accessible above the table.",
+    "Implement 'Low Stock Alerts' prominently, perhaps as a summary widget at the top (e.g., '12 Items Low on Stock').",
+    "Forms for 'Add/Edit Item' must handle SKU/Barcode fields seamlessly.",
+    "Avoid generic centered layouts. Use left-aligned dense grids.",
+    "DO NOT apply universal transition (transition: all). Use specific transitions.",
+    "Ensure the UI does not look like standard 'Vercel/Stripe' by adhering strictly to the Chivo/IBM Plex typography and flat, technical border styling.",
+    "Use data-testid on all interactive elements as strictly requested."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Do not converge toward generic 'AI slop' aesthetics. Push for the defined High-Contrast Technical look.",
+    "Never use dark colors as gradients.",
+    "Create depth through 1px borders and layered z-index, not heavy shadows.",
+    "Never use AI assistant Emojis for icons.",
+    "Prioritize reusing existing components in src/components/ui.",
+    "Use sonner for toasts.",
+    "Never use placeholder image URLs. Use the provided ones."
+  ]
+}

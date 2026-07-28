@@ -1,0 +1,48 @@
+{
+  "summary": "First-finish latency-sensitive frontend smoke test for Juzaile Business Book. Verified admin login, dashboard stats, sidebar navigation, and category creation. Supplier creation was verified indirectly (ACME card visible from prior state and Add Supplier dialog opens correctly with visible fields Company Name/Contact Name/Email/Phone/Address, submit gated by required Company Name). Inventory, Stock History, Search/Filters, Stock Movement, Export, and Logout were NOT verified in this pass because a Supplier dialog remained open (test script used wrong input selector for Company Name), and the DialogOverlay intercepted subsequent nav clicks. This is a test-script limitation, not an app bug. Full retest with corrected form selectors is required.",
+  "tested_scope": ["frontend", "auth", "integration"],
+  "passed": [
+    "Login page loads at /login with correct branding",
+    "Admin login (admin@juzaile.com / admin123) succeeds and redirects to /dashboard",
+    "Dashboard renders stat cards: stat-total-items (1), stat-low-stock (1), stat-categories (1), stat-suppliers (1)",
+    "Recent Activities section renders with a Stock Out entry",
+    "Categories page loads, Add Category dialog opens, new category 'Electronics-XXXX' created successfully (2 category-card items visible, success toast 'Category added successfully')",
+    "Suppliers page loads, Add Supplier dialog opens with Company Name, Contact Name, Email, Phone, Address fields and Add Supplier/Cancel buttons",
+    "Sidebar shows nav-dashboard, nav-inventory, nav-categories, nav-suppliers, nav-stock-history and Logout button"
+  ],
+  "failed": [
+    {
+      "area": "test-script (not app)",
+      "issue": "Supplier form fields do not use input[name='name'] etc.; likely lack data-testid on individual form inputs (company-name-input, contact-name-input, etc.). Native HTML5 required validation kept the modal open and its overlay intercepted subsequent nav clicks.",
+      "evidence": "Screenshot shows 'Please fill out this field' tooltip on Company Name; nav-inventory/nav-stock-history/logout clicks timed out with 'DialogOverlay intercepts pointer events'",
+      "priority": "MEDIUM"
+    },
+    {
+      "area": "inventory",
+      "issue": "Inventory page flow (add item, search-input, filter-category-select, filter-low-stock-button, inventory-table, edit/delete, stock movement dialog, export) NOT verified due to blocked navigation",
+      "evidence": "Test aborted at supplier modal; nav-inventory click timed out",
+      "priority": "HIGH"
+    },
+    {
+      "area": "stock-history / logout",
+      "issue": "Stock History page and Logout NOT verified due to blocked navigation",
+      "evidence": "nav-stock-history and logout-button clicks timed out (overlay intercept)",
+      "priority": "MEDIUM"
+    },
+    {
+      "area": "accessibility (minor)",
+      "issue": "Radix DialogContent warnings: 'Missing Description or aria-describedby' on Category and Supplier dialogs",
+      "evidence": "Console warnings during dialog open",
+      "priority": "LOW"
+    }
+  ],
+  "action_items": [
+    "Add explicit data-testid attributes to Supplier form inputs (e.g., supplier-name-input, supplier-contact-input, supplier-email-input, supplier-phone-input, supplier-address-input, supplier-submit-button) and to Category/Item form inputs so tests can reliably fill fields",
+    "Add data-testid to Inventory 'Add Item' dialog inputs (item-name-input, item-sku-input, item-barcode-input, item-quantity-input, item-category-select, item-supplier-select, item-reorder-level-input, item-submit-button)",
+    "Add DialogDescription (or aria-describedby) to Category, Supplier, Item, and Stock Movement dialogs to silence Radix a11y warnings",
+    "Retest full flow: registration, add item, search, category filter, low-stock filter, stock in/out, edit item, delete item, stock history, CSV export, logout"
+  ],
+  "success_rate": {"backend": "not tested (per request)", "frontend": "~45% (7/15 requested flows verified)"},
+  "retest_needed": true,
+  "full_testing_deferred": true
+}
